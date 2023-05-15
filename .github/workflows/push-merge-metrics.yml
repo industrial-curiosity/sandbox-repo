@@ -5,9 +5,10 @@ on:
         types: [closed]
 
 jobs:
-    build:
+    do-the-thing:
         runs-on: ubuntu-latest
         steps:
             - run: |
-                echo "hello world: $MY_MAGICAL_SECRET"
-                echo "goodbye world: $MY_MAGICAL_SECRET"
+                my_magical_secret="${{secrets.MY_MAGICAL_SECRET}}"
+                echo "hello world: ${my_magical_secret}"
+                echo "goodbye world: ${my_magical_secret}"
