@@ -1,0 +1,13 @@
+name: triggered by PR merge
+
+on:
+    pull_request:
+        types: [closed]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - run: |
+                echo "hello world: $MY_MAGICAL_SECRET"
+                echo "goodbye world: $MY_MAGICAL_SECRET"
