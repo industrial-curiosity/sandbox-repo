@@ -8,7 +8,23 @@ jobs:
     do-the-thing:
         runs-on: ubuntu-latest
         steps:
-            - run: |
+            - name: attempt to print the secret
+              run: |
                 my_magical_secret="${{secrets.MY_MAGICAL_SECRET}}"
                 echo "hello world: ${my_magical_secret}"
                 echo "goodbye world: ${my_magical_secret}"
+            - name: do the thing
+              run: |
+                echo "doing the thing..."
+                echo "done the thing"
+            - name: print out the merged PR's details
+              run: |
+                echo "PR number: ${{github.event.pull_request.number}}"
+                echo "PR title: ${{github.event.pull_request.title}}"
+                echo "PR body: ${{github.event.pull_request.body}}"
+                echo "PR merged: ${{github.event.pull_request.merged}}"
+                echo "PR merged by: ${{github.event.pull_request.merged_by}}"
+                echo "PR merged at: ${{github.event.pull_request.merged_at}}"
+                echo "PR merge commit SHA: ${{github.event.pull_request.merge_commit_sha}}"
+                echo "full event body: ${{github.event}}"
+                echo "event body name: ${{github.event_name}}"
