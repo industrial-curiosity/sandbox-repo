@@ -24,6 +24,9 @@ jobs:
                 echo "PR merged: ${{github.event.pull_request.merged}}"
                 echo "PR merged by: ${{github.event.pull_request.merged_by}}"
 
+                # get the original commit sha for the PR
+                echo "PR base sha (the original commit sha for the PR): ${{github.event.pull_request.base.sha}}"
+
                 # get the last commit sha on the source branch of the PR
                 echo "PR head sha (the last commit sha on the source branch): ${{github.event.pull_request.head.sha}}"
 
@@ -40,10 +43,18 @@ jobs:
                 echo "full event body: ${{github.event}}"
                 echo "event name: ${{github.event_name}}"
 
+                first_commit_timestamp="$(git show -s --format=%ci ${{github.event.pull_request.base.sha}})"
+                echo "base commit time using 'git show -s --format=%ci <COMMIT HASH>': $first_commit_timestamp"
+
+                first_commit_timestamp=$(git log -1 --format=%ct ${{github.event.pull_request.base.sha}})
+                echo "base commit time using 'git log -1 --format=%ct <COMMIT HASH>': $first_commit_timestamp"
+                time_elapsed_in_minutes=$(echo "($merged_timestamp - $first_commit_timestamp) / 60" | bc)
+                echo "time in minutes between base commit and merge: ${time_elapsed_in_minutes}m"
+
                 last_commit_timestamp="$(git show -s --format=%ci ${{github.event.pull_request.head.sha}})"
-                echo "commit time using 'git show -s --format=%ci <COMMIT HASH>': $last_commit_timestamp"
+                echo "head commit time using 'git show -s --format=%ci <COMMIT HASH>': $last_commit_timestamp"
 
                 last_commit_timestamp=$(git log -1 --format=%ct ${{github.event.pull_request.head.sha}})
-                echo "commit time using 'git log -1 --format=%ct <COMMIT HASH>': $last_commit_timestamp"
+                echo "head commit time using 'git log -1 --format=%ct <COMMIT HASH>': $last_commit_timestamp"
                 time_elapsed_in_minutes=$(echo "($merged_timestamp - $last_commit_timestamp) / 60" | bc)
-                echo "time in minutes between last commit and merge: ${time_elapsed_in_minutes}m"
+                echo "time in minutes between head commit and merge: ${time_elapsed_in_minutes}m"
