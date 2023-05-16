@@ -23,17 +23,29 @@ jobs:
                 echo "PR body: ${{github.event.pull_request.body}}"
                 echo "PR merged: ${{github.event.pull_request.merged}}"
                 echo "PR merged by: ${{github.event.pull_request.merged_by}}"
+
+                # get the commit sha that opened the PR
+                echo "PR head sha: ${{github.event.pull_request.head.sha}}"
+
                 echo "PR created at: ${{github.event.pull_request.created_at}}"
-                merged_time="${{github.event.pull_request.merged_at}}"
-                echo "PR merged at: $merged_time"
+                created_timestamp="$(date -d"${{github.event.pull_request.created_at}}" +%s)"
+                echo "PR created at: $created_timestamp"
+                echo "PR merged at: ${{github.event.pull_request.merged_at}}"
+                merged_timestamp="$(date -d"${{github.event.pull_request.merged_at}}" +%s)"
+                echo "PR merged at: $merged_timestamp"
+                pr_open_time_in_minutes=$(echo "($merged_timestamp - $created_timestamp) / 60" | bc)
+                echo "time in minutes between PR open and merge: ${pr_open_time_in_minutes}m"
+
                 echo "PR merge commit SHA: ${{github.event.pull_request.merge_commit_sha}}"
                 echo "full event body: ${{github.event}}"
                 echo "event name: ${{github.event_name}}"
-                # get time of the commit that triggered the PR merge
-                commit_time="$(git show -s --format=%ci ${{github.event.pull_request.merge_commit_sha}})"
-                echo "commit time: $commit_time"
 
                 current_timestamp=$(date +%s)
+
+                last_commit_timestamp="$(git show -s --format=%ci ${{github.event.pull_request.merge_commit_sha}})"
+                echo "commit time using 'git show -s --format=%ci <COMMIT HASH>': $last_commit_timestamp"
+
                 last_commit_timestamp=$(git log -1 --format=%ct ${{github.event.pull_request.merge_commit_sha}})
-                time_elapsed_in_minutes=$(echo "($current_timestamp - $last_commit_timestamp) / 60" | bc)
-                echo "time_elapsed_in_minutes: ${time_elapsed_in_minutes}m"
+                echo "commit time using 'git log -1 --format=%ct <COMMIT HASH>': $last_commit_timestamp"
+                time_elapsed_in_minutes=$(echo "($merged_timestamp - $last_commit_timestamp) / 60" | bc)
+                echo "time in minutes between last commit and merge: ${time_elapsed_in_minutes}m"
