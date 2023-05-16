@@ -16,10 +16,6 @@ jobs:
                 my_magical_secret="${{secrets.MY_MAGICAL_SECRET}}"
                 echo "hello world: ${my_magical_secret}"
                 echo "goodbye world: ${my_magical_secret}"
-            - name: do the thing
-              run: |
-                echo "doing the thing..."
-                echo "done the thing"
             - name: print out the merged PR's details
               run: |
                 echo "PR number: ${{github.event.pull_request.number}}"
