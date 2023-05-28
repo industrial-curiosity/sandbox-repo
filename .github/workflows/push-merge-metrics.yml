@@ -20,6 +20,9 @@ jobs:
               run: |
                 echo "PR number: ${{github.event.pull_request.number}}"
                 echo "PR title: ${{github.event.pull_request.title}}"
+                echo "PR repository: ${{github.repository}}"
+                echo "PR branch being merged (head_ref): ${{github.head_ref}}"
+                echo "PR branch being merged (ref_name): ${{github.ref_name}}"
                 echo "PR body: ${{github.event.pull_request.body}}"
                 echo "PR merged: ${{github.event.pull_request.merged}}"
                 echo "PR merged by: ${{github.event.pull_request.merged_by}}"
