@@ -14,6 +14,8 @@ jobs:
           temp_file=$(mktemp)
           # write the results of the ls command to the temp_file
           ls > $temp_file
+
+          git add $temp_file
       - run: echo "::set-output name=branch_name::$(date +test-pr-%Y%m%d)"
         id: branch_name
       - name: Create Pull Request
