@@ -1,0 +1,29 @@
+name: make a PR
+on: [push]
+jobs:
+  make-a-pr:
+    runs-on: ubuntu-latest
+    name: make-a-pr
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # make a tempfile
+          temp_file=$(mktemp file.XXXX)
+          # write the results of the ls command to the temp_file
+          ls > $temp_file
+
+          git add $temp_file
+      - run: echo "::set-output name=branch_name::$(date +test-pr-%Y%m%d)"
+        id: branch_name
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: ${{steps.branch_name.outputs.branch_name}}
+          branch: ${{steps.branch_name.outputs.branch_name}}
+          commit-message: "oh hello you: ${{steps.branch_name.outputs.branch_name}}"
+          body: "some random thing"
+          base: main
+          labels: this-is-my-label, this-is-my-gun
