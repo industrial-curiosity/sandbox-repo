@@ -11,7 +11,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           # make a tempfile
-          temp_file=$(mktemp)
+          temp_file=$(mktemp file.XXXX)
           # write the results of the ls command to the temp_file
           ls > $temp_file
 
