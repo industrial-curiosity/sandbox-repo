@@ -26,5 +26,5 @@ jobs:
           commit-message: "oh hello you: ${{steps.branch_name.outputs.branch_name}}"
           body: "some random thing"
           base: main
-          labels: this-is-my-label, this-is-my-gun
+          labels: this-is-my-label, this-is-my-gun, automerge
           reviewers: therightstuff
