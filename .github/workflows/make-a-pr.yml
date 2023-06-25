@@ -27,3 +27,4 @@ jobs:
           body: "some random thing"
           base: main
           labels: this-is-my-label, this-is-my-gun
+          reviewers: therightstuff
