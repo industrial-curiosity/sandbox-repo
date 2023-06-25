@@ -21,6 +21,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           title: ${{steps.branch_name.outputs.branch_name}}
           branch: ${{steps.branch_name.outputs.branch_name}}
           commit-message: "oh hello you: ${{steps.branch_name.outputs.branch_name}}"
