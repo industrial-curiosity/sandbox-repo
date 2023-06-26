@@ -1,3 +1,5 @@
+# see https://github.com/marketplace/actions/create-pull-request
+# try out https://github.com/marketplace/actions/github-action-for-creating-pull-requests
 name: make a PR
 on: [push]
 jobs:

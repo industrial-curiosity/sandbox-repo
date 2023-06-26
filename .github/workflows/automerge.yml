@@ -1,3 +1,7 @@
+# see https://github.com/marketplace/actions/merge-pull-requests-automerge-action
+# don't forget the repo settings!
+# i wonder why https://github.com/marketplace/actions/enable-github-automerge wasn't triggered
+# https://github.com/hmarr/auto-approve-action seems dangerous
 name: automerge
 on:
   pull_request:
